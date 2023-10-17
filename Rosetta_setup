@@ -1,0 +1,14 @@
+## Link for full instructions for setup of latest version of Rosetta:
+## https://www.rosettacommons.org/docs/latest/getting_started/Getting-Started#local-installation-and-use-of-rosetta
+
+
+FOR MAC USERS
+
+## coomon error when compiling/building rosetta after installing it is: python No such file or directory
+## to fix this, we need to install homebrew, then pyenv
+## install homebrew with the following command, 
+$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" ## it will ask for your user password
+ 
+##  Install pyenv with brew to manage different Python versions:
+brew install pyenv
+pyenv install 3.7.3
