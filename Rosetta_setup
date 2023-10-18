@@ -8,7 +8,14 @@ FOR MAC USERS
 ## to fix this, we need to install homebrew, then pyenv
 ## install homebrew with the following command, 
 $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" ## it will ask for your user password
- 
+
+## DO NOT USE PYTHON 3.12 missing imp module
+# 3.8.13 se recomienda para mac
 ##  Install pyenv with brew to manage different Python versions:
 brew install pyenv
-pyenv install 3.7.3
+pyenv install 3.8.13
+pyenv global 3.8.13
+Add eval "$(pyenv init --path)" to ~/.zprofile (or ~/.bash_profile or ~/.zshrc, whichever you need)
+
+
+
