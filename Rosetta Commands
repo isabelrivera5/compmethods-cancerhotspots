@@ -1,0 +1,20 @@
+Important links that contain test commands:
+https://www.rosettacommons.org/demos/latest/tutorials/analysis/Analysis
+https://www.rosettacommons.org/demos/latest/tutorials/input_and_output/input_and_output#controlling-output_score-file-formats
+https://www.rosettacommons.org/demos/latest/tutorials/Relax_Tutorial/Relax
+https://www.rosettacommons.org/demos/latest/tutorials/scoring/scoring#scoring-in-rosetta
+
+
+## The basis of these commands are to produce a "score" file which contains numeric scores on different energy measures of the protein
+
+We can pass a list of PDBs called pdblist, which contains one path to PDB per line (space separated PDBs work, but they cannot be comma or semi-colon separated) like this:
+input_files/1qys.pdb
+
+First running relax protocol
+
+ /Users/risa/Downloads/rosetta.binary.m1.release-356/main/source/bin/relax.default.macosclangrelease -in:file:s /Users/risa/Downloads/1qys.pdb
+
+
+
+
+/Users/risa/Downloads/rosetta.binary.m1.release-356/main/source/bin/score.default.macosclangrelease -in:file:l ../Documents/relaxedpdbs -in:file:native ../Downloads/1qys.pdb -ignore_waters
