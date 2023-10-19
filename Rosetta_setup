@@ -24,10 +24,10 @@ The following document describes a set of instructions recommended for MAC users
 
 ## After these actions, now we will try to compile Rosetta 
 
-    First untar/uncompress your downloaded copy of the code
+## First untar/uncompress your downloaded copy of the code
       tar -xvzf Rosetta[releasenumber].tar.gz
 
-    Next, navigate to the source directory: 
+## Next, navigate to the source directory: 
       cd main/source
 
     ## Rosetta uses SCons as a compile assistant. You will likely need to download and install this first.
