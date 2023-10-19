@@ -1,60 +1,83 @@
-The links included in this document contain test commands. 
+The following document contains an overview on how to use Rosetta (after setting up and compiling the program) within the terminal of a Mac computer
+(depending on your system, you may need to use another type of command).
 
-https://www.rosettacommons.org/demos/latest/tutorials/analysis/Analysis
-https://www.rosettacommons.org/demos/latest/tutorials/Relax_Tutorial/Relax
+### $ROSETTA3 = path-to-Rosetta/main/source anytime you see it
 
-***************************BASIS OF ROSETTA ********************************
-https://www.rosettacommons.org/demos/latest/tutorials/scoring/scoring
 
-"In Rosetta, the energy of a biomolecule is calculated by scoring it. 
-Rosetta has an optimized energy function or score function called ref2015 for calculating 
-the energy of all atomic interactions in a globular protein made of L-amino acids.
-While a lower scoring structure is more likely to be closer to the native structure,
-the scores do not have a direct conversion to physical energy units like kcal/mol. 
-Instead we represent them in Rosetta Energy Units (REU)."
-********************************************************************
+*All of the links included in this document contain test commands. 
 
 
 
-*************** STEP 1: INPUT FILES***************************
-https://www.rosettacommons.org/demos/latest/tutorials/input_and_output/input_and_output#controlling-output_score-file-formats
-
-The input file format that we will use for our commands in Rosetta are PDB files that can be downloaded from the Protein Data Bank
-
-#To pass in a single PDB use the in:file:s option. For example, the following can be used to calculate the energy of a refined PDB 1QYS.
-#The input PDB is present in the input_files folder. ($ROSETTA3=path-to-Rosetta/main/source anytime you see it)
-
-$> $ROSETTA3/bin/score_jd2.default.linuxgccrelease -in:file:s input_files/1qys.pdb
-
-
-## The basis of the commands we will use in Rosetta  are to produce a "score" file which contains numeric scores on different energy measures of the protein
-The score file contains the scores for all models generated in a run
-Running this should produce a file called score.sc in your current working directory with the energy scores of 1QYS
-
-
-A PDB downloaded directly from the Protein Data Bank may or may not work with Rosetta in general. 
-If an error is produced, try adding the option -ignore_unrecognized_res at the end of your command to bypass unrecognized residues.
+                        ***************************BASIS OF ROSETTA ********************************
+                         https://www.rosettacommons.org/demos/latest/tutorials/scoring/scoring
+                         
+                         ## "In Rosetta, the energy of a biomolecule is calculated by scoring it. 
+                         ## Rosetta has an optimized energy function or score function called ref2015 for calculating 
+                         ## the energy of all atomic interactions in a globular protein made of L-amino acids.
+                         ## While a lower scoring structure is more likely to be closer to the native structure,
+                         ## the scores do not have a direct conversion to physical energy units like kcal/mol. 
+                         ## Instead we represent them in Rosetta Energy Units (REU)."
+                         
+                         
+                         ## The basis of the commands we will use in Rosetta are to produce a "score" file which 
+                         ## contains numeric scores on different energy measures of the protein
 
 
-## Our goal is to be able to extract a graph that shows the relationship between RMSD values and Energy score values of proteins
 
-Extract score and rmsd values for the best 1000 models!
+                         *************** STEP 1: INPUT FILES ***************************
+                        https://www.rosettacommons.org/demos/latest/tutorials/input_and_output/input_and_output
+                        
+                        ## The input file format that we will use for our commands in Rosetta are PDB files that can be downloaded from the Protein Data Bank
+                        
+                        ## To pass in a single PDB use the in:file:s option. For example, the following can be used to 
+                        ## calculate the energy of a refined PDB 1QYS (the input PDB is present in the input_files folder) 
+          
+                        
+                        $> $ROSETTA3/bin/score_jd2.default.macosclangrelease -in:file:s input_files/1qys.pdb 
+                        
 
-$ sort -n -k2 example_score_file.sc | head -n 1000 | awk '{print $2 "\t" $25 "\t" $NF}' > score_rmsd.dat
+                        ## Running the command above should produce a file called score.sc in your current working directory with the energy scores of 1QYS
 
-this will sort by total score, take only the top 1000, extract columns 2 (score), 25 (rms) and the very last one (description,tag) and write this into a new file, called score_rmsd.dat.
+       
+                        ## The score.sc file contains the scores for all models generated in a run. In this case we only ran one model, but we also have
+                        ## the option of running a list of models. 
 
-Note: The position of scoring terms in the score file depends on what protocol you are running and what options you are using!
+                        ##  We can pass a list of PDBs called pdblist, which contains one path to PDB per line 
+                        ## (space separated PDBs work, but they cannot be comma or semi-colon separated) like this: input_files/1qys.pdb input_files/1ubq.pdb
+                        COMMAND in terminal
+/Users/risa/Downloads/rosetta.binary.m1.release-356/main/source/bin/score_jd2.default.macosclangrelease -in:file:l /Users/risa/Downloads/batch-download-structures-1695145551264
 
-Plot column 2 (rmsd) vs column 1 (score) of score_rmsd.dat
+                        ## Additional Info
+                        ## A PDB downloaded directly from the Protein Data Bank may or may not work with Rosetta in general. 
+                        ## If an error is produced, try adding the option -ignore_unrecognized_res at the end of your command to bypass unrecognized residues.
 
-We can pass a list of PDBs called pdblist, which contains one path to PDB per line (space separated PDBs work, but they cannot be comma or semi-colon separated) like this:
-input_files/1qys.pdb
+                        
+                        ***************** STEP 2: RELAX PROTOCOL ****************************
+                       https://www.rosettacommons.org/demos/latest/tutorials/Relax_Tutorial/Relax
 
-First running relax protocol
+                       ## On a single file 
+                      
+                       # first 
+                        $> $ROSETTA3/bin/relax.default.macosclangrelease -in:file:s input_files/1qys.pdb
+                       
+                       # then 
+                       
+                        $> $ROSETTA3/bin/score.default.macosclangrelease -in:file:l ../Documents/relaxedpdbs -in:file:native ../Downloads/1qys.pdb -ignore_waters
 
- /Users/risa/Downloads/rosetta.binary.m1.release-356/main/source/bin/relax.default.macosclangrelease -in:file:s /Users/risa/Downloads/1qys.pdb
 
-then 
 
-/Users/risa/Downloads/rosetta.binary.m1.release-356/main/source/bin/score.default.macosclangrelease -in:file:l ../Documents/relaxedpdbs -in:file:native ../Downloads/1qys.pdb -ignore_waters
+                          ************************ STEP 3: PRODUCING GRAPHS**************************
+                           https://www.rosettacommons.org/demos/latest/tutorials/analysis/Analysis
+
+                         ## Our goal is to be able to extract a graph that shows the relationship between RMSD values and Energy score values of proteins
+                         
+                         ## Extract score and rmsd values for the best 1000 models!
+                         
+                         $ sort -n -k2 example_score_file.sc | head -n 1000 | awk '{print $2 "\t" $25 "\t" $NF}' > score_rmsd.dat
+                         
+                         ## this will sort by total score, take only the top 1000, extract columns 2 (score), 25 (rms) and the very last one (description,tag) 
+                         and write this into a new file, called score_rmsd.dat.
+                         
+                         ## Note: The position of scoring terms in the score file depends on what protocol you are running and what options you are using!
+                         
+                         ## Plot column 2 (rmsd) vs column 1 (score) of score_rmsd.dat
