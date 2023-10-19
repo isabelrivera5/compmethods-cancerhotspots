@@ -1,21 +1,37 @@
+The following document describes a set of instructions recommended for MAC users in order to set up and compile Rosetta after downloading
+
 ## Link for full instructions for setup of latest version of Rosetta:
-## https://www.rosettacommons.org/docs/latest/getting_started/Getting-Started#local-installation-and-use-of-rosetta
+ https://www.rosettacommons.org/docs/latest/getting_started/Getting-Started#local-installation-and-use-of-rosetta
 
 
-FOR MAC USERS
 
-## coomon error when compiling/building rosetta after installing it is: python No such file or directory
+## A common error when compiling/building rosetta after installing it is: python No such file or directory
 ## to fix this, we need to install homebrew, then pyenv
+
 ## install homebrew with the following command, 
-$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" ## it will ask for your user password
+  $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" ## it will ask for your user password
 
-## DO NOT USE PYTHON 3.12 missing imp module
-# 3.8.13 se recomienda para mac
 ##  Install pyenv with brew to manage different Python versions:
-brew install pyenv
-pyenv install 3.8.13
-pyenv global 3.8.13
-Add eval "$(pyenv init --path)" to ~/.zprofile (or ~/.bash_profile or ~/.zshrc, whichever you need)
+  brew install pyenv
+
+## install python through pyenv  #It is recommended to avoid using python version 3.12 as it is misssing an important "imp" module
+  pyenv install 3.8.13 ## installs recommended python version for mac users
+  pyenv global 3.8.13  ## sets python version as global one 
+## Add 
+  eval "$(pyenv init --path)" 
+#to ~/.zprofile (or ~/.bash_profile or ~/.zshrc, whichever you need)
 
 
+## After these actions, now we will try to compile Rosetta 
 
+    First untar/uncompress your downloaded copy of the code
+      tar -xvzf Rosetta[releasenumber].tar.gz
+
+    Next, navigate to the source directory: 
+      cd main/source
+
+    ## Rosetta uses SCons as a compile assistant. You will likely need to download and install this first.
+
+    ## The basic compilation command is 
+        ./scons.py -j<number_of_processors_to_use> mode=release bin.
+    ## Replace with a number one processor fewer than your computer has. Expect compilation to take a while (hours on one processor).
