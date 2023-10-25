@@ -64,7 +64,20 @@ The following document contains an overview on how to use Rosetta (after setting
                        
                         $> $ROSETTA3/bin/score.default.macosclangrelease -in:file:l ../Documents/relaxedpdbs -in:file:native ../Downloads/1qys.pdb -ignore_waters
 
+                        ## Running the score function on multiple files to get their rms value requires a bash script that iterates over the folders as an array. 
 
+
+                                      #! /bin/bash
+                                      declare -a file1=($(ls /path/to/relaxedpdbs/*.pdb))
+                                      
+                                      declare -a file2=($(ls /path/to/originalpdbs/*.pdb))
+                                      
+                                      for ((i=0;i<=${#file1[@]};i++))
+                                      do
+                                      
+                                      /Users/risa/Downloads/rosetta.binary.m1.release-356/main/source/bin/score.default.macosclangrelease -in:file:s ${file1[i]}  -in:file:native ${file2[i]} -ignore_waters
+                                      
+                                      done
 
                           ************************ STEP 3: PRODUCING GRAPHS**************************
                            https://www.rosettacommons.org/demos/latest/tutorials/analysis/Analysis
