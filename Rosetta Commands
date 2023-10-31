@@ -52,8 +52,14 @@ The following document contains an overview on how to use Rosetta (after setting
                         ## If an error is produced, try adding the option -ignore_unrecognized_res at the end of your command to bypass unrecognized residues.
 
                         
-                        ***************** STEP 2: RELAX PROTOCOL ****************************
+                        ***************** STEP 2: RELAX PROTOCOL AND RMS VAlUES****************************
                        https://www.rosettacommons.org/demos/latest/tutorials/Relax_Tutorial/Relax
+                       https://www.rosettacommons.org/demos/latest/tutorials/input_and_output/input_and_output#controlling-output_score-file-formats
+
+
+                        In the previous step, we ran the score command to extract out score energy values on the original proteins. In
+                        this step, we will run the relax protocol on our protein to achieve a more stable conformation of hopefully lower score values. Then we can compare 
+                        the rms of our relaxed anr original proteins to see the difference. 
 
                        ## On a single file 
                       
